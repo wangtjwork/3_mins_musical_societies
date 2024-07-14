@@ -10,7 +10,7 @@ import SingleNoteSheet from './components/SingleNoteSheet';
 import { AppBar, Box, Button, CssBaseline, Stack, Toolbar, Typography } from '@mui/material';
 import SingleNotePickerForm from './components/SingleNotePickerForm';
 import { PlayArrow } from '@mui/icons-material';
-import { playNote } from './utils/playSoundUtils';
+import { playNote } from './utils/playSoundUtils'
 
 function App() {
   const [note, setNote] = useState<string>('');
