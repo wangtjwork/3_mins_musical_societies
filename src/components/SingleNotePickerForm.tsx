@@ -42,7 +42,7 @@ function SingleNotePickerForm({ correctNote, onNext }: Props) {
                     size="large"
                     sx={{ height: 42, alignSelf: 'center' }}
                 >
-                    {PICTHS.map(pitch => (<ToggleButton value={pitch} >{pitch}</ToggleButton>))}
+                    {PICTHS.map(pitch => (<ToggleButton key={pitch} value={pitch} >{pitch}</ToggleButton>))}
                 </ToggleButtonGroup>
                 <FormLabel>组数</FormLabel>
                 <ToggleButtonGroup
@@ -53,7 +53,7 @@ function SingleNotePickerForm({ correctNote, onNext }: Props) {
                     exclusive
                     size="large"
                     sx={{ height: 42, alignSelf: 'center' }}>
-                    {OCTAVES.map(octave => (<ToggleButton value={octave}>{octave}</ToggleButton>))}
+                    {OCTAVES.map(octave => (<ToggleButton key={octave} value={octave}>{octave}</ToggleButton>))}
                 </ToggleButtonGroup>
             </FormControl>
 

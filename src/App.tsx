@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -9,6 +9,7 @@ import { TREBLE_CLEF_NOTES_SCIENTIFIC } from './utils/musicNotesConfig';
 import SingleNoteSheet from './components/SingleNoteSheet';
 import { AppBar, Box, Button, CssBaseline, Stack, Toolbar, Typography } from '@mui/material';
 import SingleNotePickerForm from './components/SingleNotePickerForm';
+import { PlayArrow } from '@mui/icons-material';
 
 function App() {
   const [note, setNote] = useState<string>('');
@@ -36,6 +37,7 @@ function App() {
           {note == '' ? <Button sx={{ width: 'fit-content' }} variant='contained' onClick={onStartClick}>开始</Button> : null}
           {xmlDoc != null ? <SingleNoteSheet xmlDoc={xmlDoc} /> : null}
           {note != '' ? <SingleNotePickerForm correctNote={note} onNext={onStartClick} /> : null}
+          {note != '' ? <Button color='success' onClick={() => console.log('play button click')}><PlayArrow /> </Button> : null}
         </Stack>
       </Box>
     </>
