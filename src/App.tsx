@@ -10,6 +10,7 @@ import SingleNoteSheet from './components/SingleNoteSheet';
 import { AppBar, Box, Button, CssBaseline, Stack, Toolbar, Typography } from '@mui/material';
 import SingleNotePickerForm from './components/SingleNotePickerForm';
 import { PlayArrow } from '@mui/icons-material';
+import { playNote } from './utils/playSoundUtils';
 
 function App() {
   const [note, setNote] = useState<string>('');
@@ -20,6 +21,10 @@ function App() {
     const randomNoteXmlDoc = generateSingleNoteXml(singleNoteXmlDoc, randomNote[0], randomNote[1]);
     setNote(randomNote);
     setXmlDoc(randomNoteXmlDoc);
+  }
+
+  const onPlayClick = (note: string) => {
+    playNote(note, '1')
   }
 
   return (
@@ -37,7 +42,7 @@ function App() {
           {note == '' ? <Button sx={{ width: 'fit-content' }} variant='contained' onClick={onStartClick}>开始</Button> : null}
           {xmlDoc != null ? <SingleNoteSheet xmlDoc={xmlDoc} /> : null}
           {note != '' ? <SingleNotePickerForm correctNote={note} onNext={onStartClick} /> : null}
-          {note != '' ? <Button color='success' onClick={() => console.log('play button click')}><PlayArrow /> </Button> : null}
+          {note != '' ? <Button color='success' onClick={() => onPlayClick(note)}><PlayArrow /> </Button> : null}
         </Stack>
       </Box>
     </>
