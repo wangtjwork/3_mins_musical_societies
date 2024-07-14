@@ -14,7 +14,7 @@ function App() {
     const xmlDoc = generateSingleNoteXml(singleNoteXmlDoc, randomNote[0], randomNote[1]);
     setNote(randomNote);
 
-    const osmd = new OpenSheetMusicDisplay(musicSheetRef.current);
+    const osmd = new OpenSheetMusicDisplay(musicSheetRef.current as unknown as HTMLElement);
     osmd.setOptions({
       backend: "svg",
       drawTitle: false,
@@ -28,7 +28,7 @@ function App() {
     <>
       <h1>五线谱读音名练习</h1>
       <button onClick={onStartClick}>开始</button>
-      <div class={"sheet"} ref={musicSheetRef} />
+      <div className={"sheet"} ref={musicSheetRef} />
       <div>答案：{note}</div>
     </>
   )

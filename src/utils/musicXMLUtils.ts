@@ -45,10 +45,15 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 const parser = new DOMParser();
 export const singleNoteXmlDoc = parser.parseFromString(xmlString, "text/xml");
 
-export function generateSingleNoteXml(xmlDoc, pitch, octave) {
-    var pitchNode = xmlDoc.getElementById(SINGLE_NOTE_PITCH_ID);
-    pitchNode.innerHTML = pitch;
-    var octaveNode = xmlDoc.getElementById(SINGLE_NOTE_OCTAVE_ID);
-    octaveNode.innerHTML = octave;
+export function generateSingleNoteXml(xmlDoc: XMLDocument, pitch: string, octave: string) {
+  const pitchNode = xmlDoc.getElementById(SINGLE_NOTE_PITCH_ID);
+  const octaveNode = xmlDoc.getElementById(SINGLE_NOTE_OCTAVE_ID);
+  if (pitchNode == null || octaveNode == null) {
+    console.warn('pitch or octave does not exist for this specific XML config, pitch: ', pitchNode, 'octave: ', octaveNode);
     return xmlDoc;
+  }
+
+  pitchNode.innerHTML = pitch;
+  octaveNode.innerHTML = octave;
+  return xmlDoc;
 }
