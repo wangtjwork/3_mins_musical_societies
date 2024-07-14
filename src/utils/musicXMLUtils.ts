@@ -45,6 +45,11 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 const parser = new DOMParser();
 export const singleNoteXmlDoc = parser.parseFromString(xmlString, "text/xml");
 
+function deepCopyXmlDocument(xmlDoc: XMLDocument): XMLDocument {
+  const serializedXml = (new XMLSerializer()).serializeToString(xmlDoc.getRootNode())
+  return new DOMParser().parseFromString(serializedXml, "text/xml")
+}
+
 export function generateSingleNoteXml(xmlDoc: XMLDocument, pitch: string, octave: string) {
   const pitchNode = xmlDoc.getElementById(SINGLE_NOTE_PITCH_ID);
   const octaveNode = xmlDoc.getElementById(SINGLE_NOTE_OCTAVE_ID);
@@ -55,5 +60,7 @@ export function generateSingleNoteXml(xmlDoc: XMLDocument, pitch: string, octave
 
   pitchNode.innerHTML = pitch;
   octaveNode.innerHTML = octave;
-  return xmlDoc;
+
+  // need to shallow copy to confirm the node changed for react
+  return deepCopyXmlDocument(xmlDoc);
 }
