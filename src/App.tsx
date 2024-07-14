@@ -19,7 +19,7 @@ function App() {
   return (
     <>
       <h1>五线谱读音名练习</h1>
-      <button onClick={onStartClick}>开始</button>
+      <button onClick={onStartClick}>{note == '' ? '开始' : '下一题'}</button>
       {xmlDoc != null ? <SingleNoteSheet xmlDoc={xmlDoc} /> : null}
       <div>答案：{note}</div>
     </>
