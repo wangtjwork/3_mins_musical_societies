@@ -33,10 +33,9 @@ function App() {
           </Toolbar>
         </AppBar>
         <Stack flexGrow={1} alignItems={'center'} marginTop={5}>
-          <Button sx={{ width: 'fit-content' }} variant='contained' onClick={onStartClick}>{note == '' ? '开始' : '下一题'}</Button>
+          {note == '' ? <Button sx={{ width: 'fit-content' }} variant='contained' onClick={onStartClick}>开始</Button> : null}
           {xmlDoc != null ? <SingleNoteSheet xmlDoc={xmlDoc} /> : null}
-          <SingleNotePickerForm correctNote={note} />
-          <div>答案：{note}</div>
+          {note != '' ? <SingleNotePickerForm correctNote={note} onNext={onStartClick} /> : null}
         </Stack>
       </Box>
     </>
