@@ -9,7 +9,7 @@ import { TREBLE_CLEF_NOTES_SCIENTIFIC } from './utils/musicNotesConfig';
 import SingleNoteSheet from './components/SingleNoteSheet';
 import { AppBar, Box, Button, CssBaseline, Stack, Toolbar, Typography } from '@mui/material';
 import SingleNotePickerForm from './components/SingleNotePickerForm';
-import { PlayArrow } from '@mui/icons-material';
+import { PlayArrow, Refresh } from '@mui/icons-material';
 import { playNote } from './utils/playSoundUtils';
 
 function App() {
@@ -36,6 +36,7 @@ function App() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               五线谱读音名练习
             </Typography>
+            <Button color='error' onClick={() => location.reload()}><Refresh /></Button>
           </Toolbar>
         </AppBar>
         <Stack flexGrow={1} alignItems={'center'} marginTop={5}>
