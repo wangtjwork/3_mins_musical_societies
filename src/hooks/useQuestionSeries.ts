@@ -9,7 +9,7 @@ type QuestionSeriesRet = {
 };
 
 function useQuestionSeries(seriesLength: number): QuestionSeriesRet {
-    const [index, setIndex] = useState(0);
+    const [index, setIndex] = useState(1);
 
     const goToNext = useCallback(() => setIndex((i) => i + 1), [setIndex]);
     const hasNext = useMemo(() => index < seriesLength, [index, seriesLength]);

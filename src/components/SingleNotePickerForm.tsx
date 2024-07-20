@@ -4,28 +4,31 @@ import { useEffect, useState } from "react";
 const PICTHS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 const OCTAVES = ['3', '4', '5', '6'];
 
-type Props = { correctNote: string, onNext: () => void }
+type Props = {
+    correctNote: string,
+    onSubmit: (isCorrect: boolean) => void,
+    isAnswerCorrect: boolean | null
+};
 
-function SingleNotePickerForm({ correctNote, onNext }: Props) {
+function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props) {
     const [selectedPitch, setSelectedPitch] = useState<string>('C');
     const [selectedOctave, setSelectedOctave] = useState<string>('0');
 
-    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-
+    const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
     const [showCorrectNote, setShowCorrectNote] = useState<boolean>(false);
 
     const checkNote = () => {
+        setHasSubmitted(true);
         if (selectedPitch + selectedOctave == correctNote) {
-            setIsCorrect(true);
+            onSubmit(true);
         } else {
-            setIsCorrect(false);
+            onSubmit(false);
         }
     }
 
     useEffect(() => {
         setSelectedPitch('');
         setSelectedOctave('');
-        setIsCorrect(null);
         setShowCorrectNote(false);
     }, [correctNote]);
 
@@ -58,16 +61,15 @@ function SingleNotePickerForm({ correctNote, onNext }: Props) {
             </FormControl>
 
             <Box marginTop={1}>
-                {isCorrect == null || isCorrect == false ? <Button variant={'outlined'} onClick={checkNote} sx={{ width: 'fit-content' }}>检查</Button> : null}
-                {isCorrect == true || showCorrectNote == true ? <Button sx={{ width: 'fit-content' }} variant='contained' onClick={onNext}>下一题</Button> : null}
-                {isCorrect != null
+                {hasSubmitted == false ? <Button variant={'outlined'} onClick={checkNote} sx={{ width: 'fit-content' }}>检查</Button> : null}
+                {isAnswerCorrect != null
                     ? (
-                        isCorrect
+                        isAnswerCorrect
                             ? <Typography variant="body2" marginTop={1} gutterBottom color='success.main'>正确</Typography>
                             : <Typography variant="body2" marginTop={1} gutterBottom color='error.main'>错误</Typography>)
                     : null
                 }
-                {isCorrect == false ? (
+                {isAnswerCorrect == false ? (
                     <>
                         {showCorrectNote
                             ? <Typography variant="body2" marginTop={1} gutterBottom color='success.main'>{correctNote}</Typography>
