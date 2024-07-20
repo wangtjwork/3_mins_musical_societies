@@ -30,6 +30,7 @@ function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props)
         setSelectedPitch('');
         setSelectedOctave('');
         setShowCorrectNote(false);
+        setHasSubmitted(false);
     }, [correctNote]);
 
     return (
