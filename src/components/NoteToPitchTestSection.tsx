@@ -8,13 +8,17 @@ import { TREBLE_CLEF_NOTES_SCIENTIFIC } from "../constants/musicNotesConfig";
 import { generateSingleNoteXml, singleNoteXmlDoc } from "../utils/musicXMLUtils";
 import useQuestionSeries from "../hooks/useQuestionSeries";
 
-const SERIES_LENGTH = 20;
+const SERIES_LENGTH = 2;
 
 function getRandomElement<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-function NoteToPitchTestSection() {
+type Props = {
+  goToMainPage: () => void
+}
+
+function NoteToPitchTestSection({ goToMainPage }: Props) {
   const [note, setNote] = useState<string>(getRandomElement(TREBLE_CLEF_NOTES_SCIENTIFIC));
   const xmlDoc = useMemo(() => {
     return generateSingleNoteXml(singleNoteXmlDoc, note[0], note[1]);
@@ -22,7 +26,7 @@ function NoteToPitchTestSection() {
 
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [correctNotesCount, setCorrectNotesCount] = useState(0);
-  const { index, hasNext, goToNext } = useQuestionSeries(SERIES_LENGTH);
+  const { index, hasNext, goToNext, resetIndex } = useQuestionSeries(SERIES_LENGTH);
 
   const quizCompleted = !hasNext && isCorrect != null;
 
@@ -46,12 +50,23 @@ function NoteToPitchTestSection() {
     playNote(note, '1')
   }
 
+  const handleRestart = () => {
+    setNote(getRandomElement(TREBLE_CLEF_NOTES_SCIENTIFIC));
+    resetIndex();
+    setIsCorrect(null);
+    setCorrectNotesCount(0);
+  }
+
   if (quizCompleted) {
     return <Container maxWidth="sm">
       <Typography variant="h5">本轮结果</Typography>
       <Divider />
       <Typography variant="body1" color="success">正确：{correctNotesCount}</Typography>
       <Typography variant="body1" color="error">错误：{SERIES_LENGTH - correctNotesCount}</Typography>
+      <Box>
+        <Button color="primary" onClick={handleRestart}>开始新一轮</Button>
+        <Button color="secondary" onClick={goToMainPage}>返回主界面</Button>
+      </Box>
     </Container>
   }
 

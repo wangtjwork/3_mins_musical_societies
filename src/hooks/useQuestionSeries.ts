@@ -5,7 +5,8 @@ type QuestionSeriesRet = {
     hasNext: boolean,
     goToNext: () => void,
     hasPrevious: boolean,
-    goToPrevious: () => void
+    goToPrevious: () => void,
+    resetIndex: () => void
 };
 
 function useQuestionSeries(seriesLength: number): QuestionSeriesRet {
@@ -17,8 +18,10 @@ function useQuestionSeries(seriesLength: number): QuestionSeriesRet {
     const goToPrevious = useCallback(() => setIndex((i) => i + 1), [setIndex]);
     const hasPrevious = useMemo(() => index > 0, [index, seriesLength]);
 
+    const resetIndex = useCallback(() => setIndex(1), [setIndex]);
+
     return {
-        index, hasNext, goToNext, hasPrevious, goToPrevious
+        index, hasNext, goToNext, hasPrevious, goToPrevious, resetIndex
     };
 }
 

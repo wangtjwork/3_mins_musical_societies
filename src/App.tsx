@@ -46,7 +46,7 @@ function App() {
                 onClick={() => setAppMode(AppMode.TEST_NOTE_TO_PITCH)}
               >开始</Button>
             ) : null}
-          {appMode == AppMode.TEST_NOTE_TO_PITCH ? <NoteToPitchTestSection /> : null}
+          {appMode == AppMode.TEST_NOTE_TO_PITCH ? <NoteToPitchTestSection goToMainPage={() => setAppMode(AppMode.INITIAL)} /> : null}
         </Stack>
       </Box>
     </>
