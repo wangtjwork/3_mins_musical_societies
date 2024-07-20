@@ -8,7 +8,7 @@ import { TREBLE_CLEF_NOTES_SCIENTIFIC } from "../constants/musicNotesConfig";
 import { generateSingleNoteXml, singleNoteXmlDoc } from "../utils/musicXMLUtils";
 import useQuestionSeries from "../hooks/useQuestionSeries";
 
-const SERIES_LENGTH = 2;
+const SERIES_LENGTH = 20;
 
 function getRandomElement<T>(array: T[]): T {
   return array[Math.floor(Math.random() * array.length)];
