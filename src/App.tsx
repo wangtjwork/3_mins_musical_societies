@@ -9,6 +9,7 @@ import { ArrowBack, Refresh } from '@mui/icons-material';
 import { AppMode } from './constants/AppMode';
 import NoteToPitchTestSection from './components/NoteToPitchTestSection';
 import UserPreferencesContextProvider from './components/UserPreferencesContextProvider';
+import UserPreferencesSection from './components/UserPreferencesSection';
 
 function App() {
   const [appMode, setAppMode] = useState<AppMode>(AppMode.INITIAL);
@@ -40,14 +41,23 @@ function App() {
         </AppBar>
         <Stack flexGrow={1} alignItems={'center'} marginTop={5}>
           {appMode == AppMode.INITIAL
-            ? (
-              <Button
-                sx={{ width: 'fit-content' }}
-                variant='contained'
-                onClick={() => setAppMode(AppMode.TEST_NOTE_TO_PITCH)}
-              >开始</Button>
-            ) : null}
-          {appMode == AppMode.TEST_NOTE_TO_PITCH ? <NoteToPitchTestSection goToMainPage={() => setAppMode(AppMode.INITIAL)} /> : null}
+            && (
+              <Stack gap={1}>
+                <Button
+                  sx={{ width: 'fit-content' }}
+                  variant='contained'
+                  onClick={() => setAppMode(AppMode.TEST_NOTE_TO_PITCH)}
+                >开始</Button>
+                <Button
+                  sx={{ width: 'fit-content' }}
+
+                  variant='outlined'
+                  onClick={() => setAppMode(AppMode.USER_PREFERENCES)}
+                >设置</Button>
+              </Stack>
+            )}
+          {appMode == AppMode.TEST_NOTE_TO_PITCH && <NoteToPitchTestSection goToMainPage={() => setAppMode(AppMode.INITIAL)} />}
+          {appMode == AppMode.USER_PREFERENCES && <UserPreferencesSection />}
         </Stack>
       </Box>
     </UserPreferencesContextProvider>

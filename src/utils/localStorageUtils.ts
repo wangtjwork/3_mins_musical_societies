@@ -2,10 +2,10 @@ import { UserPreferences } from "../types/UserPreferencesType";
 
 const USER_PREFERENCES_LOCAL_STORAGE_KEY = 'userPreferences'
 
-export function loadPreferencesFromLocalStorage(): UserPreferences {
+export function loadPreferencesFromLocalStorage(defaultPreferences: UserPreferences): UserPreferences {
     const localStorageValue = localStorage.getItem(USER_PREFERENCES_LOCAL_STORAGE_KEY);
     if (localStorageValue == null) {
-        return {};
+        return defaultPreferences;
     }
 
     const userPreferences = JSON.parse(localStorageValue);
