@@ -8,12 +8,13 @@ import { AppBar, Box, Button, CssBaseline, IconButton, Stack, Toolbar, Typograph
 import { ArrowBack, Refresh } from '@mui/icons-material';
 import { AppMode } from './constants/AppMode';
 import NoteToPitchTestSection from './components/NoteToPitchTestSection';
+import UserPreferencesContextProvider from './components/UserPreferencesContextProvider';
 
 function App() {
   const [appMode, setAppMode] = useState<AppMode>(AppMode.INITIAL);
 
   return (
-    <>
+    <UserPreferencesContextProvider>
       <CssBaseline />
       <Box flexDirection={'column'} alignItems={'stretch'} textAlign={'center'} marginLeft={5} marginRight={5}>
         <AppBar position='static'>
@@ -49,7 +50,7 @@ function App() {
           {appMode == AppMode.TEST_NOTE_TO_PITCH ? <NoteToPitchTestSection goToMainPage={() => setAppMode(AppMode.INITIAL)} /> : null}
         </Stack>
       </Box>
-    </>
+    </UserPreferencesContextProvider>
   )
 }
 
