@@ -1,9 +1,9 @@
 import { createContext, useMemo, useState } from "react";
-import { PitchFormat, UserPreferences } from "../types/UserPreferencesType";
+import { PitchFormatType, UserPreferences } from "../types/UserPreferencesType";
 import { loadPreferencesFromLocalStorage, writePreferencesIntoLocalStorage } from "../utils/localStorageUtils";
 
 type UserPreferencesSetters = {
-    setNoteToPitchTestFormat: (format: PitchFormat) => void
+    setNoteToPitchTestFormat: (format: PitchFormatType) => void
 }
 
 export type UserPreferencesContextType = UserPreferences & UserPreferencesSetters;
@@ -22,7 +22,7 @@ function UserPreferencesContextProvider({ children }: Props) {
 
     const userPreferencesValue = useMemo<UserPreferencesContextType>(() => ({
         ...userPreferences,
-        setNoteToPitchTestFormat: (format: PitchFormat) => {
+        setNoteToPitchTestFormat: (format: PitchFormatType) => {
             const nextUserPreferences = {
                 ...userPreferences,
                 noteToPitchTestFormat: format,
