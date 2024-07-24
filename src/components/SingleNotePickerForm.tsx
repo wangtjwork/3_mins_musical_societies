@@ -54,7 +54,7 @@ function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props)
                     color="primary"
                     aria-labelledby="pitch-selector-label"
                     value={selectedPitch}
-                    onChange={(_, value) => setSelectedPitch(value)}
+                    onChange={(_, val) => setSelectedPitch(val ?? '')}
                     exclusive
                     size="large"
                     sx={{ height: 42, alignSelf: 'center' }}
@@ -66,7 +66,7 @@ function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props)
                     color='secondary'
                     aria-labelledby="octave-selector-label"
                     value={selectedOctave}
-                    onChange={(_, val) => setSelectedOctave(val)}
+                    onChange={(_, val) => setSelectedOctave(val ?? '')}
                     exclusive
                     size="large"
                     sx={{ height: 42, alignSelf: 'center' }}>
