@@ -4,24 +4,20 @@ import SingleNotePickerForm from "./SingleNotePickerForm";
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material";
 import { NavigateNext, PlayArrow } from "@mui/icons-material";
 import { playNote } from "../utils/playSoundUtils";
-import { TREBLE_CLEF_NOTES_SCIENTIFIC } from "../constants/musicNotesConfig";
-import { generateSingleNoteXml, singleNoteXmlDoc } from "../utils/musicXMLUtils";
+import { generateSingleNoteXml, NoteDefinition, singleNoteXmlDoc } from "../utils/musicXMLUtils";
 import useQuestionSeries from "../hooks/useQuestionSeries";
+import { generateRandomSingleNote } from "../utils/noteGenerationUtils";
 
 const SERIES_LENGTH = 20;
-
-function getRandomElement<T>(array: T[]): T {
-  return array[Math.floor(Math.random() * array.length)];
-}
 
 type Props = {
   goToMainPage: () => void
 }
 
 function NoteToPitchTestSection({ goToMainPage }: Props) {
-  const [note, setNote] = useState<string>(getRandomElement(TREBLE_CLEF_NOTES_SCIENTIFIC));
+  const [note, setNote] = useState<NoteDefinition>(generateRandomSingleNote({ clefs: ['treble'] }));
   const xmlDoc = useMemo(() => {
-    return generateSingleNoteXml(singleNoteXmlDoc, note[0], note[1]);
+    return generateSingleNoteXml(singleNoteXmlDoc, note);
   }, [note]);
 
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -36,7 +32,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
     }
     setIsCorrect(null);
     goToNext();
-    setNote(getRandomElement(TREBLE_CLEF_NOTES_SCIENTIFIC));
+    setNote(generateRandomSingleNote({ clefs: ['treble'] }));
   }
 
   const handleSubmit = (isCorrect: boolean) => {
@@ -46,12 +42,12 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
     }
   }
 
-  const onPlayClick = (note: string) => {
+  const onPlayClick = (note: NoteDefinition) => {
     playNote(note, '1')
   }
 
   const handleRestart = () => {
-    setNote(getRandomElement(TREBLE_CLEF_NOTES_SCIENTIFIC));
+    setNote(generateRandomSingleNote({ clefs: ['treble'] }));
     resetIndex();
     setIsCorrect(null);
     setCorrectNotesCount(0);
@@ -72,7 +68,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
 
   return <>
     <SingleNoteSheet xmlDoc={xmlDoc} />
-    <SingleNotePickerForm correctNote={note} isAnswerCorrect={isCorrect} onSubmit={handleSubmit} />
+    <SingleNotePickerForm correctNote={note.pitch + note.octave} isAnswerCorrect={isCorrect} onSubmit={handleSubmit} />
     <Box marginTop={1}>
       <Button color='success' onClick={() => onPlayClick(note)}><PlayArrow /></Button>
     </Box>

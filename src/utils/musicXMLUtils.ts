@@ -1,5 +1,9 @@
+import { Clef, Octave, Pitch } from "../types/NoteType";
+import clefToMusicXmlNodes from "./clefUtils";
+
 const SINGLE_NOTE_PITCH_ID = "singleNotePitchID";
 const SINGLE_NOTE_OCTAVE_ID = "singleNoteOctaveID";
+const SINGLE_NOTE_CLEF_ID = 'singleNoteClefID';
 
 const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE score-partwise PUBLIC
@@ -25,7 +29,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
           <beats>4</beats>
           <beat-type>4</beat-type>
         </time>
-        <clef>
+        <clef id="${SINGLE_NOTE_CLEF_ID}">
           <sign>G</sign>
           <line>2</line>
         </clef>
@@ -50,16 +54,26 @@ function deepCopyXmlDocument(xmlDoc: XMLDocument): XMLDocument {
   return new DOMParser().parseFromString(serializedXml, "text/xml")
 }
 
-export function generateSingleNoteXml(xmlDoc: XMLDocument, pitch: string, octave: string) {
+export type NoteDefinition = {
+  clef: Clef,
+  pitch: Pitch,
+  octave: Octave,
+}
+
+export function generateSingleNoteXml(xmlDoc: XMLDocument, note: NoteDefinition) {
+  const { clef, pitch, octave } = note;
+
   const pitchNode = xmlDoc.getElementById(SINGLE_NOTE_PITCH_ID);
   const octaveNode = xmlDoc.getElementById(SINGLE_NOTE_OCTAVE_ID);
-  if (pitchNode == null || octaveNode == null) {
+  const clefNode = xmlDoc.getElementById(SINGLE_NOTE_CLEF_ID);
+  if (pitchNode == null || octaveNode == null || clefNode == null) {
     console.warn('pitch or octave does not exist for this specific XML config, pitch: ', pitchNode, 'octave: ', octaveNode);
     return xmlDoc;
   }
 
   pitchNode.innerHTML = pitch;
   octaveNode.innerHTML = octave;
+  clefNode.innerHTML = clefToMusicXmlNodes(clef);
 
   // need to shallow copy to confirm the node changed for react
   return deepCopyXmlDocument(xmlDoc);
