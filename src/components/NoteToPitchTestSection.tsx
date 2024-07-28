@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import SingleNoteSheet from "./SingleNoteSheet";
 import SingleNotePickerForm from "./SingleNotePickerForm";
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material";
@@ -7,6 +7,8 @@ import { playNote } from "../utils/playSoundUtils";
 import { generateSingleNoteXml, NoteDefinition, singleNoteXmlDoc } from "../utils/musicXMLUtils";
 import useQuestionSeries from "../hooks/useQuestionSeries";
 import { generateRandomSingleNote } from "../utils/noteGenerationUtils";
+import { UserPreferencesContext } from "./UserPreferencesContextProvider";
+import { Clef } from "../types/NoteType";
 
 const SERIES_LENGTH = 20;
 
@@ -23,6 +25,8 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [correctNotesCount, setCorrectNotesCount] = useState(0);
   const { index, hasNext, goToNext, resetIndex } = useQuestionSeries(SERIES_LENGTH);
+  const { sheetFeature } = useContext(UserPreferencesContext);
+  const clefsOptions: Clef[] = sheetFeature == 'TrebleOnly' ? ['treble'] : ['treble', 'bass'];
 
   const quizCompleted = !hasNext && isCorrect != null;
 
@@ -32,7 +36,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
     }
     setIsCorrect(null);
     goToNext();
-    setNote(generateRandomSingleNote({ clefs: ['treble'] }));
+    setNote(generateRandomSingleNote({ clefs: clefsOptions }));
   }
 
   const handleSubmit = (isCorrect: boolean) => {
@@ -47,7 +51,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
   }
 
   const handleRestart = () => {
-    setNote(generateRandomSingleNote({ clefs: ['treble'] }));
+    setNote(generateRandomSingleNote({ clefs: clefsOptions }));
     resetIndex();
     setIsCorrect(null);
     setCorrectNotesCount(0);
