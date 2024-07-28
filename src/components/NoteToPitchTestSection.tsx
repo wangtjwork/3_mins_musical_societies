@@ -72,7 +72,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
 
   return <>
     <SingleNoteSheet xmlDoc={xmlDoc} />
-    <SingleNotePickerForm correctNote={note.pitch + note.octave} isAnswerCorrect={isCorrect} onSubmit={handleSubmit} />
+    <SingleNotePickerForm correctNote={note} isAnswerCorrect={isCorrect} onSubmit={handleSubmit} />
     <Box marginTop={1}>
       <Button color='success' onClick={() => onPlayClick(note)}><PlayArrow /></Button>
     </Box>
