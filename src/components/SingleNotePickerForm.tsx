@@ -3,8 +3,8 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { UserPreferencesContext } from "./UserPreferencesContextProvider";
 import { convertScientificToHelmholtz } from "../utils/pitchNotationUtils";
 
-const PICTHS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
-const LOWER_CASE_PITCHS = PICTHS.map(c => c.toLowerCase());
+const PITCHS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
+const LOWER_CASE_PITCHS = PITCHS.map(c => c.toLowerCase());
 const OCTAVES = ['1', '2', '3', '4', '5', '6'];
 
 type Props = {
@@ -44,23 +44,27 @@ function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props)
         setHasSubmitted(false);
     }, [correctNote]);
 
-    const pitchOptions = noteToPitchTestFormat == 'Helmholtz' ? LOWER_CASE_PITCHS : PICTHS;
+    const pitchOptionRows = noteToPitchTestFormat == 'Helmholtz' ? [LOWER_CASE_PITCHS, PITCHS] : [PITCHS];
 
     return (
         <>
             <FormControl>
                 <FormLabel>音名</FormLabel>
-                <ToggleButtonGroup
-                    color="primary"
-                    aria-labelledby="pitch-selector-label"
-                    value={selectedPitch}
-                    onChange={(_, val) => setSelectedPitch(val ?? '')}
-                    exclusive
-                    size="large"
-                    sx={{ height: 42, alignSelf: 'center' }}
-                >
-                    {pitchOptions.map(pitch => (<ToggleButton sx={{ 'text-transform': 'none' }} key={pitch} value={pitch}>{pitch}</ToggleButton>))}
-                </ToggleButtonGroup>
+                {
+                    pitchOptionRows.map((pitchOptions, i) => (
+                        <ToggleButtonGroup
+                            color="primary"
+                            aria-labelledby="pitch-selector-label"
+                            value={selectedPitch}
+                            onChange={(_, val) => setSelectedPitch(val ?? '')}
+                            exclusive
+                            size="large"
+                            sx={{ height: 42, alignSelf: 'center', marginTop: i == 0 ? 0 : 1 }}
+                        >
+                            {pitchOptions.map(pitch => (<ToggleButton sx={{ 'text-transform': 'none' }} key={pitch} value={pitch}>{pitch}</ToggleButton>))}
+                        </ToggleButtonGroup>
+                    ))
+                }
                 <FormLabel>组数</FormLabel>
                 <ToggleButtonGroup
                     color='secondary'
