@@ -2,6 +2,7 @@ import { createContext, useMemo, useState } from "react";
 import { PitchFormatType, SheetFeatureType, UserPreferences } from "../types/UserPreferencesType";
 import { loadPreferencesFromLocalStorage, writePreferencesIntoLocalStorage } from "../utils/localStorageUtils";
 import { defaultUserPreferences } from "../constants/defaultUserPreferences";
+import { SheetFeatures } from "../constants/sheetFeatures";
 
 type UserPreferencesSetters = {
     setNoteToPitchTestFormat: (format: PitchFormatType) => void,
@@ -23,7 +24,7 @@ type Props = {
 
 function UserPreferencesContextProvider({ children }: Props) {
     const [userPreferences, setUserPreferences] = useState<UserPreferences>(
-        loadPreferencesFromLocalStorage(defaultUserPreferences));
+        { ...defaultUserPreferences, ...loadPreferencesFromLocalStorage(defaultUserPreferences) });
 
     const userPreferencesValue = useMemo<UserPreferencesContextType>(() => ({
         ...userPreferences,
@@ -40,6 +41,7 @@ function UserPreferencesContextProvider({ children }: Props) {
                 ...userPreferences,
                 sheetFeature: feature
             };
+            console.log('called', feature);
             setUserPreferences(nextUserPreferences);
             writePreferencesIntoLocalStorage(nextUserPreferences);
         }
