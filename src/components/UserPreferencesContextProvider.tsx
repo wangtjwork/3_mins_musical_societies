@@ -1,17 +1,20 @@
 import { createContext, useMemo, useState } from "react";
-import { PitchFormatType, UserPreferences } from "../types/UserPreferencesType";
+import { PitchFormatType, SheetFeatureType, UserPreferences } from "../types/UserPreferencesType";
 import { loadPreferencesFromLocalStorage, writePreferencesIntoLocalStorage } from "../utils/localStorageUtils";
 import { defaultUserPreferences } from "../constants/defaultUserPreferences";
 
 type UserPreferencesSetters = {
-    setNoteToPitchTestFormat: (format: PitchFormatType) => void
+    setNoteToPitchTestFormat: (format: PitchFormatType) => void,
+    setSheetFeature: (feature: SheetFeatureType) => void,
 }
 
 export type UserPreferencesContextType = UserPreferences & UserPreferencesSetters;
 
 export const UserPreferencesContext = createContext({
     noteToPitchTestFormat: 'Scientific',
-    setNoteToPitchTestFormat: () => { }
+    sheetFeature: 'TrebleOnly',
+    setNoteToPitchTestFormat: () => { },
+    setSheetFeature: () => { }
 } as UserPreferencesContextType);
 
 type Props = {
@@ -28,6 +31,14 @@ function UserPreferencesContextProvider({ children }: Props) {
             const nextUserPreferences = {
                 ...userPreferences,
                 noteToPitchTestFormat: format,
+            };
+            setUserPreferences(nextUserPreferences);
+            writePreferencesIntoLocalStorage(nextUserPreferences);
+        },
+        setSheetFeature: (feature) => {
+            const nextUserPreferences = {
+                ...userPreferences,
+                sheetFeature: feature
             };
             setUserPreferences(nextUserPreferences);
             writePreferencesIntoLocalStorage(nextUserPreferences);

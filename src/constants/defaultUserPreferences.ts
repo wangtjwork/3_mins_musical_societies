@@ -1,5 +1,6 @@
 import { UserPreferences } from "../types/UserPreferencesType";
 
 export const defaultUserPreferences: UserPreferences = {
-    noteToPitchTestFormat: 'Scientific'
+    noteToPitchTestFormat: 'Scientific',
+    sheetFeature: 'TrebleOnly',
 }
