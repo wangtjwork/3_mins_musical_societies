@@ -1,14 +1,15 @@
 import { Box, Button, FormControl, FormLabel, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { UserPreferencesContext } from "./UserPreferencesContextProvider";
-import { convertScientificToHelmholtz } from "../utils/pitchNotationUtils";
+import { convertNoteDefinitionToNote, convertScientificToHelmholtz } from "../utils/pitchNotationUtils";
+import { NoteDefinition } from "../utils/musicXMLUtils";
 
 const PITCHS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 const LOWER_CASE_PITCHS = PITCHS.map(c => c.toLowerCase());
 const OCTAVES = ['1', '2', '3', '4', '5', '6'];
 
 type Props = {
-    correctNote: string,
+    correctNote: NoteDefinition,
     onSubmit: (isCorrect: boolean) => void,
     isAnswerCorrect: boolean | null
 };
@@ -23,7 +24,9 @@ function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props)
     const { noteToPitchTestFormat } = useContext(UserPreferencesContext);
 
     const convertedCorrectNote = useMemo(() => {
-        return noteToPitchTestFormat == 'Helmholtz' ? convertScientificToHelmholtz(correctNote) : correctNote;
+        return noteToPitchTestFormat == 'Helmholtz' ?
+            convertScientificToHelmholtz(correctNote) :
+            convertNoteDefinitionToNote(correctNote);
     }, [correctNote]);
 
     const checkNote = () => {
