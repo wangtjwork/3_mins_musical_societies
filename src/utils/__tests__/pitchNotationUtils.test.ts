@@ -1,6 +1,7 @@
 import { Octave, Pitch, ScientificNote } from "../../types/NoteType";
+import { SolfeggioPitchType } from "../../types/SolfeggioType";
 import { NoteDefinition } from "../musicXMLUtils";
-import { convertScientificToHelmholtz } from "../pitchNotationUtils";
+import { convertScientificToHelmholtz, convertScientificToSolfeggio } from "../pitchNotationUtils";
 
 function convertScientificNoteToDefinition(note: string): NoteDefinition {
     return {
@@ -22,3 +23,14 @@ describe('scientific To Helmholtz', () => {
     })
 })
 
+describe('scientific to Solfeggio', () => {
+    describe.each(
+        [['C1', 'do'], ['D2', 're'], ['E3', 'mi'], ['F4', 'fa'],
+        ['G2', 'sol'], ['A5', 'la'], ['B1', 'xi']]
+    )('from %s to %s', (from: string, to: string) => {
+        test('convert accurate', () => {
+            const note = convertScientificNoteToDefinition(from);
+            expect(convertScientificToSolfeggio(note)).toEqual(to);
+        });
+    });
+})

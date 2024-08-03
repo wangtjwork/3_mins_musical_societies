@@ -1,4 +1,5 @@
-import { ScientificNote } from "../types/NoteType";
+import { Pitches, ScientificNote } from "../types/NoteType";
+import { SolfeggioPitches, SolfeggioPitchType } from "../types/SolfeggioType";
 import { NoteDefinition } from "./musicXMLUtils";
 
 export function convertScientificToHelmholtz(scientificPitch: NoteDefinition): string {
@@ -17,4 +18,8 @@ export function convertScientificToHelmholtz(scientificPitch: NoteDefinition): s
 
 export function convertNoteDefinitionToNote(noteDefinition: NoteDefinition): ScientificNote {
     return `${noteDefinition.pitch}${noteDefinition.octave}`;
+}
+
+export function convertScientificToSolfeggio(noteDefinition: NoteDefinition): SolfeggioPitchType {
+    return SolfeggioPitches[Pitches.findIndex((pitch) => pitch == noteDefinition.pitch)];
 }
