@@ -1,8 +1,9 @@
 import { Box, Button, FormControl, FormLabel, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { UserPreferencesContext } from "./UserPreferencesContextProvider";
-import { convertNoteDefinitionToNote, convertScientificToHelmholtz } from "../utils/pitchNotationUtils";
+import { convertNoteDefinitionToNote, convertScientificToHelmholtz, convertScientificToSolfeggio } from "../utils/pitchNotationUtils";
 import { NoteDefinition } from "../utils/musicXMLUtils";
+import { SolfeggioPitches } from "../types/SolfeggioType";
 
 const PITCHS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 const LOWER_CASE_PITCHS = PITCHS.map(c => c.toLowerCase());
@@ -24,9 +25,14 @@ function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props)
     const { noteToPitchTestFormat } = useContext(UserPreferencesContext);
 
     const convertedCorrectNote = useMemo(() => {
-        return noteToPitchTestFormat == 'Helmholtz' ?
-            convertScientificToHelmholtz(correctNote) :
-            convertNoteDefinitionToNote(correctNote);
+        switch (noteToPitchTestFormat) {
+            case 'Helmholtz':
+                return convertScientificToHelmholtz(correctNote);
+            case 'Scientific':
+                return convertNoteDefinitionToNote(correctNote);
+            case 'Solfeggio':
+                return convertScientificToSolfeggio(correctNote);
+        }
     }, [correctNote]);
 
     const checkNote = () => {
@@ -47,7 +53,8 @@ function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props)
         setHasSubmitted(false);
     }, [correctNote]);
 
-    const pitchOptionRows = noteToPitchTestFormat == 'Helmholtz' ? [LOWER_CASE_PITCHS, PITCHS] : [PITCHS];
+    const pitchOptionRows = noteToPitchTestFormat == 'Helmholtz' ? [LOWER_CASE_PITCHS, PITCHS] :
+        noteToPitchTestFormat == 'Solfeggio' ? [SolfeggioPitches] : [PITCHS];
 
     return (
         <>
@@ -68,17 +75,21 @@ function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props)
                         </ToggleButtonGroup>
                     ))
                 }
-                <FormLabel>组数</FormLabel>
-                <ToggleButtonGroup
-                    color='secondary'
-                    aria-labelledby="octave-selector-label"
-                    value={selectedOctave}
-                    onChange={(_, val) => setSelectedOctave(val ?? '')}
-                    exclusive
-                    size="large"
-                    sx={{ height: 42, alignSelf: 'center' }}>
-                    {OCTAVES.map(octave => (<ToggleButton key={octave} value={octave}>{octave}</ToggleButton>))}
-                </ToggleButtonGroup>
+                {noteToPitchTestFormat == 'Helmholtz' || noteToPitchTestFormat == 'Scientific' &&
+                    (<>
+                        <FormLabel>组数</FormLabel>
+                        <ToggleButtonGroup
+                            color='secondary'
+                            aria-labelledby="octave-selector-label"
+                            value={selectedOctave}
+                            onChange={(_, val) => setSelectedOctave(val ?? '')}
+                            exclusive
+                            size="large"
+                            sx={{ height: 42, alignSelf: 'center' }}>
+                            {OCTAVES.map(octave => (<ToggleButton key={octave} value={octave}>{octave}</ToggleButton>))}
+                        </ToggleButtonGroup>
+                    </>)
+                }
             </FormControl>
 
             <Box marginTop={1}>
