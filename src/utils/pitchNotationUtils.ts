@@ -1,6 +1,5 @@
-import { Pitches, ScientificNote } from "../types/NoteType";
+import { NoteDefinition, Pitches, ScientificNote } from "../types/NoteType";
 import { SolfeggioPitches, SolfeggioPitchType } from "../types/SolfeggioType";
-import { NoteDefinition } from "./musicXMLUtils";
 
 export function convertScientificToHelmholtz(scientificPitch: NoteDefinition): string {
     const { pitch, octave: octaveStr } = scientificPitch;

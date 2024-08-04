@@ -2,8 +2,8 @@ import { Box, Button, FormControl, FormLabel, ToggleButton, ToggleButtonGroup, T
 import { useContext, useEffect, useMemo, useState } from "react";
 import { UserPreferencesContext } from "./UserPreferencesContextProvider";
 import { convertNoteDefinitionToNote, convertScientificToHelmholtz, convertScientificToSolfeggio } from "../utils/pitchNotationUtils";
-import { NoteDefinition } from "../utils/musicXMLUtils";
 import { SolfeggioPitches } from "../types/SolfeggioType";
+import { NoteDefinition } from "../types/NoteType";
 
 const PITCHS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 const LOWER_CASE_PITCHS = PITCHS.map(c => c.toLowerCase());

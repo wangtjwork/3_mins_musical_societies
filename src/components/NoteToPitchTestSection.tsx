@@ -4,11 +4,11 @@ import SingleNotePickerForm from "./SingleNotePickerForm";
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material";
 import { NavigateNext, PlayArrow } from "@mui/icons-material";
 import { playNote } from "../utils/playSoundUtils";
-import { generateSingleNoteXml, NoteDefinition, singleNoteXmlDoc } from "../utils/musicXMLUtils";
+import { generateSingleNoteXml, SheetNoteDefinition, singleNoteXmlDoc } from "../utils/musicXMLUtils";
 import useQuestionSeries from "../hooks/useQuestionSeries";
 import { generateRandomSingleNote } from "../utils/noteGenerationUtils";
 import { UserPreferencesContext } from "./UserPreferencesContextProvider";
-import { Clef } from "../types/NoteType";
+import { Clef, NoteDefinition } from "../types/NoteType";
 
 const SERIES_LENGTH = 20;
 
@@ -17,7 +17,7 @@ type Props = {
 }
 
 function NoteToPitchTestSection({ goToMainPage }: Props) {
-  const [note, setNote] = useState<NoteDefinition>(generateRandomSingleNote({ clefs: ['treble'] }));
+  const [note, setNote] = useState<SheetNoteDefinition>(generateRandomSingleNote({ clefs: ['treble'] }));
   const xmlDoc = useMemo(() => {
     return generateSingleNoteXml(singleNoteXmlDoc, note);
   }, [note]);

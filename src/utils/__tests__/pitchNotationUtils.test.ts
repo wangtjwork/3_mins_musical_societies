@@ -1,13 +1,10 @@
-import { Octave, Pitch, ScientificNote } from "../../types/NoteType";
-import { SolfeggioPitchType } from "../../types/SolfeggioType";
-import { NoteDefinition } from "../musicXMLUtils";
+import { NoteDefinition, Octave, Pitch } from "../../types/NoteType";
 import { convertScientificToHelmholtz, convertScientificToSolfeggio } from "../pitchNotationUtils";
 
 function convertScientificNoteToDefinition(note: string): NoteDefinition {
     return {
         pitch: note[0] as unknown as Pitch,
-        octave: note[1] as unknown as Octave,
-        clef: 'treble'
+        octave: note[1] as unknown as Octave
     }
 }
 

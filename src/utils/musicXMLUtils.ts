@@ -1,4 +1,4 @@
-import { Clef, Octave, Pitch } from "../types/NoteType";
+import { Clef, Octave, OctaveShiftType, Pitch } from "../types/NoteType";
 import clefToMusicXmlNodes from "./clefUtils";
 
 const SINGLE_NOTE_PITCH_ID = "singleNotePitchID";
@@ -54,13 +54,14 @@ function deepCopyXmlDocument(xmlDoc: XMLDocument): XMLDocument {
   return new DOMParser().parseFromString(serializedXml, "text/xml")
 }
 
-export type NoteDefinition = {
+export type SheetNoteDefinition = {
   clef: Clef,
   pitch: Pitch,
   octave: Octave,
+  octaveShift?: OctaveShiftType,
 }
 
-export function generateSingleNoteXml(xmlDoc: XMLDocument, note: NoteDefinition) {
+export function generateSingleNoteXml(xmlDoc: XMLDocument, note: SheetNoteDefinition) {
   const { clef, pitch, octave } = note;
 
   const pitchNode = xmlDoc.getElementById(SINGLE_NOTE_PITCH_ID);

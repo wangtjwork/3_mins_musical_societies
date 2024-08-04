@@ -1,6 +1,6 @@
 import { BASS_CLEF_NOTES_SCIENTIFIC, TREBLE_CLEF_NOTES_SCIENTIFIC } from "../constants/musicNotesConfig";
-import { Clef, Octave, Pitch, ScientificNote } from "../types/NoteType";
-import { NoteDefinition } from "./musicXMLUtils";
+import { Clef, NoteDefinition, Octave, Pitch, ScientificNote } from "../types/NoteType";
+import { SheetNoteDefinition } from "./musicXMLUtils";
 
 export type NotePreferenceConfig = {
     clefs: Clef[]
@@ -10,25 +10,30 @@ function getRandomElement<T>(array: T[]): T {
     return array[Math.floor(Math.random() * array.length)];
 }
 
-function parseNoteToDefinition(note: ScientificNote, clef: Clef): NoteDefinition {
+function parseNoteToDefinition(note: ScientificNote): NoteDefinition {
     const pitch = note[0] as unknown as Pitch;
     const octave = note[1] as unknown as Octave;
     return {
         pitch,
-        octave,
-        clef
+        octave
     }
 }
 
-export function generateRandomSingleNote(config: NotePreferenceConfig): NoteDefinition {
+export function generateRandomSingleNote(config: NotePreferenceConfig): SheetNoteDefinition {
     const { clefs } = config;
 
     if (clefs.length == 1) {
         const note = generateRandomSingleNoteFromClef(clefs[0]);
-        return parseNoteToDefinition(note, clefs[0]);
+        return {
+            ...parseNoteToDefinition(note),
+            clef: clefs[0]
+        };
     } else {
         const [note, clef] = generateRandomSingleNoteFromClefs(clefs);
-        return parseNoteToDefinition(note, clef);
+        return {
+            ...parseNoteToDefinition(note),
+            clef
+        };
     }
 }
 
