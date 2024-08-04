@@ -3,7 +3,8 @@ import { Clef, NoteDefinition, Octave, Pitch, ScientificNote } from "../types/No
 import { SheetNoteDefinition } from "./musicXMLUtils";
 
 export type NotePreferenceConfig = {
-    clefs: Clef[]
+    clefs: Clef[],
+    includeExtendedRange: boolean,
 }
 
 function getRandomElement<T>(array: T[]): T {

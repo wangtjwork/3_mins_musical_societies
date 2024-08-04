@@ -9,6 +9,7 @@ import useQuestionSeries from "../hooks/useQuestionSeries";
 import { generateRandomSingleNote } from "../utils/noteGenerationUtils";
 import { UserPreferencesContext } from "./UserPreferencesContextProvider";
 import { Clef, NoteDefinition } from "../types/NoteType";
+import { getNotePreference } from "../utils/UserPreferencesToNotePreferenceUtils";
 
 const SERIES_LENGTH = 20;
 
@@ -17,7 +18,7 @@ type Props = {
 }
 
 function NoteToPitchTestSection({ goToMainPage }: Props) {
-  const [note, setNote] = useState<SheetNoteDefinition>(generateRandomSingleNote({ clefs: ['treble'] }));
+  const [note, setNote] = useState<SheetNoteDefinition>(generateRandomSingleNote({ clefs: ['treble'], includeExtendedRange: false }));
   const xmlDoc = useMemo(() => {
     return generateSingleNoteXml(singleNoteXmlDoc, note);
   }, [note]);
@@ -25,8 +26,8 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [correctNotesCount, setCorrectNotesCount] = useState(0);
   const { index, hasNext, goToNext, resetIndex } = useQuestionSeries(SERIES_LENGTH);
-  const { sheetFeature } = useContext(UserPreferencesContext);
-  const clefsOptions: Clef[] = sheetFeature == 'TrebleOnly' ? ['treble'] : ['treble', 'bass'];
+  const userPreferences = useContext(UserPreferencesContext);
+  const notePreferences = getNotePreference(userPreferences);
 
   const quizCompleted = !hasNext && isCorrect != null;
 
@@ -36,7 +37,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
     }
     setIsCorrect(null);
     goToNext();
-    setNote(generateRandomSingleNote({ clefs: clefsOptions }));
+    setNote(generateRandomSingleNote(notePreferences));
   }
 
   const handleSubmit = (isCorrect: boolean) => {
@@ -51,7 +52,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
   }
 
   const handleRestart = () => {
-    setNote(generateRandomSingleNote({ clefs: clefsOptions }));
+    setNote(generateRandomSingleNote(notePreferences));
     resetIndex();
     setIsCorrect(null);
     setCorrectNotesCount(0);
