@@ -75,7 +75,7 @@ function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props)
                         </ToggleButtonGroup>
                     ))
                 }
-                {noteToPitchTestFormat == 'Helmholtz' || noteToPitchTestFormat == 'Scientific' &&
+                {(noteToPitchTestFormat == 'Helmholtz' || noteToPitchTestFormat == 'Scientific') &&
                     (<>
                         <FormLabel>组数</FormLabel>
                         <ToggleButtonGroup

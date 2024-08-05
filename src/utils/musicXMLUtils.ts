@@ -1,9 +1,10 @@
 import { Clef, Octave, OctaveShiftType, Pitch } from "../types/NoteType";
-import clefToMusicXmlNodes from "./clefUtils";
+import { clefToMusicXmlNodes, octaveShiftToMusicXmlNodes } from "./musicXMLNodeUtils";
 
 const SINGLE_NOTE_PITCH_ID = "singleNotePitchID";
 const SINGLE_NOTE_OCTAVE_ID = "singleNoteOctaveID";
 const SINGLE_NOTE_CLEF_ID = 'singleNoteClefID';
+const OCTAVE_SHIFT_WRAPPER_ID = 'octaveShiftWrapperID';
 
 const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE score-partwise PUBLIC
@@ -20,6 +21,10 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
   </part-list>
   <part id="P1">
     <measure number="1">
+      <direction>
+        <direction-type id="octaveShiftWrapperID">
+        </direction-type>
+      </direction>
       <attributes>
         <divisions>1</divisions>
         <key>
@@ -62,12 +67,14 @@ export type SheetNoteDefinition = {
 }
 
 export function generateSingleNoteXml(xmlDoc: XMLDocument, note: SheetNoteDefinition) {
-  const { clef, pitch, octave } = note;
+  const { clef, pitch, octave, octaveShift } = note;
 
   const pitchNode = xmlDoc.getElementById(SINGLE_NOTE_PITCH_ID);
   const octaveNode = xmlDoc.getElementById(SINGLE_NOTE_OCTAVE_ID);
   const clefNode = xmlDoc.getElementById(SINGLE_NOTE_CLEF_ID);
-  if (pitchNode == null || octaveNode == null || clefNode == null) {
+  const octaveShiftWrapperNode = xmlDoc.getElementById(OCTAVE_SHIFT_WRAPPER_ID);
+
+  if (pitchNode == null || octaveNode == null || clefNode == null || octaveShiftWrapperNode == null) {
     console.warn('pitch or octave does not exist for this specific XML config, pitch: ', pitchNode, 'octave: ', octaveNode);
     return xmlDoc;
   }
@@ -75,6 +82,10 @@ export function generateSingleNoteXml(xmlDoc: XMLDocument, note: SheetNoteDefini
   pitchNode.innerHTML = pitch;
   octaveNode.innerHTML = octave;
   clefNode.innerHTML = clefToMusicXmlNodes(clef);
+
+  if (octaveShift != undefined) {
+    octaveShiftWrapperNode.innerHTML = octaveShiftToMusicXmlNodes(octaveShift);
+  }
 
   // need to shallow copy to confirm the node changed for react
   return deepCopyXmlDocument(xmlDoc);
