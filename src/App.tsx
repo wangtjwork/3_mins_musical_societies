@@ -28,8 +28,9 @@ function App() {
                   color="inherit"
                   aria-label="menu"
                   sx={{ mr: 2 }}
+                  onClick={() => setAppMode(AppMode.INITIAL)}
                 >
-                  <ArrowBack onClick={() => setAppMode(AppMode.INITIAL)} />
+                  <ArrowBack />
                 </IconButton>)
                 : null
             }

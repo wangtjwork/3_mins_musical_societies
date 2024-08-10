@@ -69,9 +69,10 @@ function SingleNotePickerForm({ correctNote, onSubmit, isAnswerCorrect }: Props)
                             onChange={(_, val) => setSelectedPitch(val ?? '')}
                             exclusive
                             size="large"
+                            key={`pitch-option-${i}`}
                             sx={{ height: 42, alignSelf: 'center', marginTop: i == 0 ? 0 : 1 }}
                         >
-                            {pitchOptions.map(pitch => (<ToggleButton sx={{ 'text-transform': 'none' }} key={pitch} value={pitch}>{pitch}</ToggleButton>))}
+                            {pitchOptions.map(pitch => (<ToggleButton sx={{ 'textTransform': 'none' }} key={pitch} value={pitch}>{pitch}</ToggleButton>))}
                         </ToggleButtonGroup>
                     ))
                 }

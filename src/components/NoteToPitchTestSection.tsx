@@ -8,7 +8,7 @@ import { generateSingleNoteXml, SheetNoteDefinition, singleNoteXmlDoc } from "..
 import useQuestionSeries from "../hooks/useQuestionSeries";
 import { generateRandomSingleNote } from "../utils/noteGenerationUtils";
 import { UserPreferencesContext } from "./UserPreferencesContextProvider";
-import { Clef, NoteDefinition } from "../types/NoteType";
+import { NoteDefinition } from "../types/NoteType";
 import { getNotePreference } from "../utils/UserPreferencesToNotePreferenceUtils";
 
 const SERIES_LENGTH = 20;
