@@ -29,10 +29,11 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
   const userPreferences = useContext(UserPreferencesContext);
   const notePreferences = getNotePreference(userPreferences);
 
-  const quizCompleted = !hasNext && isCorrect != null;
+  const [quizCompleted, setQuizCompleted] = useState<boolean>(false);
 
   const onNextClick = () => {
     if (!hasNext) {
+      setQuizCompleted(true);
       return;
     }
     setIsCorrect(null);
@@ -56,6 +57,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
     resetIndex();
     setIsCorrect(null);
     setCorrectNotesCount(0);
+    setQuizCompleted(false);
   }
 
   if (quizCompleted) {
@@ -79,7 +81,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
     </Box>
     <Stack width={"50%"} paddingLeft={5} marginTop={1} direction="row" spacing={2}>
       <Box flexGrow={1}>{index} / {SERIES_LENGTH}</Box>
-      <NavigateNext color={hasNext ? "inherit" : "disabled"} onClick={onNextClick} />
+      <NavigateNext color={"inherit"} onClick={onNextClick} />
     </Stack>
   </>
 }
