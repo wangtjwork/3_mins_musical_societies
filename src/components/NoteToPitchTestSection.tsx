@@ -11,6 +11,7 @@ import { UserPreferencesContext } from "./UserPreferencesContextProvider";
 import { NoteDefinition } from "../types/NoteType";
 import { getNotePreference } from "../utils/UserPreferencesToNotePreferenceUtils";
 import useTimeTracker from "../hooks/useTimeTracker";
+import { formatSecondsToMinuteAndMaybeHour } from "../utils/timeFormatUtils";
 
 const SERIES_LENGTH = 20;
 
@@ -70,13 +71,27 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
     restartClock();
   }
 
+  const completionTimeFormatted: { minutes?: number, seconds: number, hours?: number } = useMemo(
+    () => (
+      completionTimeInSeconds != null
+        ? formatSecondsToMinuteAndMaybeHour(completionTimeInSeconds)
+        : { seconds: 0 }
+    ),
+    [completionTimeInSeconds]);
+
   if (quizCompleted) {
+    const { hours, minutes, seconds } = completionTimeFormatted;
+
     return <Container maxWidth="sm">
       <Typography variant="h5">本轮结果</Typography>
       <Divider />
       <Typography variant="body1" color="success">正确：{correctNotesCount}</Typography>
       <Typography variant="body1" color="error">错误：{SERIES_LENGTH - correctNotesCount}</Typography>
-      <Typography variant="body1" color="error">用时：{completionTimeInSeconds}秒</Typography>
+      <Typography variant="body1" color="success">
+        用时：{hours != null && `${hours}小时`}
+        {minutes != null && `${minutes}分钟`}
+        {seconds}秒
+      </Typography>
       <Box>
         <Button color="primary" onClick={handleRestart}>开始新一轮</Button>
         <Button color="secondary" onClick={goToMainPage}>返回主界面</Button>
