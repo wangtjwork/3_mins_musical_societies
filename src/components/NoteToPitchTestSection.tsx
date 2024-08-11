@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import SingleNoteSheet from "./SingleNoteSheet";
 import SingleNotePickerForm from "./SingleNotePickerForm";
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material";
@@ -10,6 +10,7 @@ import { generateRandomSingleNote } from "../utils/noteGenerationUtils";
 import { UserPreferencesContext } from "./UserPreferencesContextProvider";
 import { NoteDefinition } from "../types/NoteType";
 import { getNotePreference } from "../utils/UserPreferencesToNotePreferenceUtils";
+import useTimeTracker from "../hooks/useTimeTracker";
 
 const SERIES_LENGTH = 20;
 
@@ -31,9 +32,17 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
 
   const [quizCompleted, setQuizCompleted] = useState<boolean>(false);
 
+  const { startClock, restartClock, getCurrentTimeInSeconds } = useTimeTracker();
+  const [completionTimeInSeconds, setCompletionTimeInSeconds] = useState<number | null>(null);
+
+  useEffect(() => {
+    startClock();
+  }, []);
+
   const onNextClick = () => {
     if (!hasNext) {
       setQuizCompleted(true);
+      setCompletionTimeInSeconds(getCurrentTimeInSeconds());
       return;
     }
     setIsCorrect(null);
@@ -58,6 +67,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
     setIsCorrect(null);
     setCorrectNotesCount(0);
     setQuizCompleted(false);
+    restartClock();
   }
 
   if (quizCompleted) {
@@ -66,6 +76,7 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
       <Divider />
       <Typography variant="body1" color="success">正确：{correctNotesCount}</Typography>
       <Typography variant="body1" color="error">错误：{SERIES_LENGTH - correctNotesCount}</Typography>
+      <Typography variant="body1" color="error">用时：{completionTimeInSeconds}秒</Typography>
       <Box>
         <Button color="primary" onClick={handleRestart}>开始新一轮</Button>
         <Button color="secondary" onClick={goToMainPage}>返回主界面</Button>
