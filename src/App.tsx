@@ -10,6 +10,8 @@ import { AppMode } from './constants/AppMode';
 import NoteToPitchTestSection from './components/NoteToPitchTestSection';
 import UserPreferencesContextProvider from './components/UserPreferencesContextProvider';
 import UserPreferencesSection from './components/UserPreferencesSection';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 function App() {
   const [appMode, setAppMode] = useState<AppMode>(AppMode.INITIAL);
@@ -61,6 +63,8 @@ function App() {
           {appMode == AppMode.USER_PREFERENCES && <UserPreferencesSection />}
         </Stack>
       </Box>
+      <Analytics />
+      <SpeedInsights />
     </UserPreferencesContextProvider>
   )
 }
