@@ -1,24 +1,27 @@
 # 3 Min Musical Society
 
-Open source practice tool for this bilibili series: [【【四川音乐学院作曲硕士】零基础自学音乐学乐理合集-第二季（最终版）/已完结】](https://www.bilibili.com/video/BV14p4y1e7TV/?share_source=copy_web&vd_source=4439fb0e3052a34289a92e7da8741b84), available as a website hosted on GitHub Pages, as well as a Progressive Web App.
+Open source practice tool for this bilibili series: [【【四川音乐学院作曲硕士】零基础自学音乐学乐理合集-第二季（最终版）/已完结】](https://www.bilibili.com/video/BV14p4y1e7TV/?share_source=copy_web&vd_source=4439fb0e3052a34289a92e7da8741b84), available as a website hosted on [Vercel](https://3-mins-musical-societies.vercel.app/), as well as a Progressive Web App.
 
 The site is optimized for Mobile and intentionally runs client-side only.
 
 ## Functionalities
 
-Currently support treble clef -> pitch testing, aka. show a random treble note, ask the user to choose the correct pitch.
+As of Aug 11, 2024, the website supports testing 20 pitches in a series, and show the total correct / error count as a summary after test.
+
+For each question, user can pick from Helmholtz / Scientific (with C4 as middle C) / Solfeggio (without group numbers) using 'settings'.
+
+Each pitch can either be a bass / treble clef, and up to 15va / 15vb.
 
 ## Future plans
 ### Functionality
-1. Testing a fixed amount of pitches instead of infinitely testing
-1. Show test results
 1. Input custom pitch and play sound
+1. Pick between different modules (pitch recognition / interval recognition etc.)
 
 ### Music features
-1. Bass clef support
-1. Accidental support
-1. Helmholtz pitch notation support
-1. Solfeggio support
+1. Key Signature recognition
+1. Interval recognition
+1. Play Intervals and sing-along
+1. Meter / beat play sound
 
 # Contributions
 Feature Request channels:
