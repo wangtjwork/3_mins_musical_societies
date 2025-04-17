@@ -12,14 +12,11 @@ import { NoteDefinition } from "../types/NoteType";
 import { getNotePreference } from "../utils/UserPreferencesToNotePreferenceUtils";
 import useTimeTracker from "../hooks/useTimeTracker";
 import { formatSecondsToMinuteAndMaybeHour } from "../utils/timeFormatUtils";
+import { Link } from "react-router";
 
 const SERIES_LENGTH = 20;
 
-type Props = {
-  goToMainPage: () => void
-}
-
-function NoteToPitchTestSection({ goToMainPage }: Props) {
+function NoteToPitchTestSection() {
   const [note, setNote] = useState<SheetNoteDefinition>(generateRandomSingleNote({ clefs: ['treble'], includeExtendedRange: false }));
   const xmlDoc = useMemo(() => {
     return generateSingleNoteXml(singleNoteXmlDoc, note);
@@ -94,7 +91,9 @@ function NoteToPitchTestSection({ goToMainPage }: Props) {
       </Typography>
       <Box>
         <Button color="primary" onClick={handleRestart}>开始新一轮</Button>
-        <Button color="secondary" onClick={goToMainPage}>返回主界面</Button>
+        <Link to="/">
+          <Button color="secondary">返回主界面</Button>
+        </Link>
       </Box>
     </Container>
   }
