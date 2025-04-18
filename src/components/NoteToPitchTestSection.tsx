@@ -98,17 +98,19 @@ function NoteToPitchTestSection() {
     </Container>
   }
 
-  return <>
-    <SingleNoteSheet xmlDoc={xmlDoc} />
-    <SingleNotePickerForm correctNote={note} isAnswerCorrect={isCorrect} onSubmit={handleSubmit} />
-    <Box marginTop={1}>
-      <Button color='success' onClick={() => onPlayClick(note)}><PlayArrow /></Button>
-    </Box>
-    <Stack width={"50%"} paddingLeft={5} marginTop={1} direction="row" spacing={2}>
-      <Box flexGrow={1}>{index} / {SERIES_LENGTH}</Box>
-      <NavigateNext color={"inherit"} onClick={onNextClick} />
+  return (
+    <Stack alignItems='center'>
+      <SingleNoteSheet xmlDoc={xmlDoc} />
+      <SingleNotePickerForm correctNote={note} isAnswerCorrect={isCorrect} onSubmit={handleSubmit} />
+      <Box marginTop={1}>
+        <Button color='success' onClick={() => onPlayClick(note)}><PlayArrow /></Button>
+      </Box>
+      <Stack width={"50%"} paddingLeft={5} marginTop={1} direction="row" spacing={2}>
+        <Box flexGrow={1}>{index} / {SERIES_LENGTH}</Box>
+        <NavigateNext color={"inherit"} onClick={onNextClick} />
+      </Stack>
     </Stack>
-  </>
+  );
 }
 
 export default NoteToPitchTestSection;

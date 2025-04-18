@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import { SheetFeatures } from "../constants/sheetFeatures";
 import FormLabel from "@mui/material/FormLabel";
+import Stack from "@mui/material/Stack";
 
 function UserPreferencesSection() {
     const {
@@ -17,8 +18,8 @@ function UserPreferencesSection() {
         setSheetFeature
     } = useContext(UserPreferencesContext);
 
-    return <Box minWidth={200}>
-        <FormControl fullWidth>
+    return <Stack minWidth={200} alignItems='center' paddingTop={4}>
+        <FormControl>
             <FormLabel>五线谱读音名表示法</FormLabel>
             <Select
                 value={noteToPitchTestFormat}
@@ -46,7 +47,7 @@ function UserPreferencesSection() {
                 </Select>
             </FormControl>
         </Box>
-    </Box>
+    </Stack>
 }
 
 export default UserPreferencesSection;
