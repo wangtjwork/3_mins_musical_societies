@@ -3,7 +3,6 @@ import SingleNoteSheet from "./SingleNoteSheet";
 import SingleNotePickerForm from "./SingleNotePickerForm";
 import { Box, Button, Container, Divider, Stack, Typography } from "@mui/material";
 import { NavigateNext, PlayArrow } from "@mui/icons-material";
-import { playNote } from "../utils/playSoundUtils";
 import { generateSingleNoteXml, SheetNoteDefinition, singleNoteXmlDoc } from "../utils/musicXMLUtils";
 import useQuestionSeries from "../hooks/useQuestionSeries";
 import { generateRandomSingleNote } from "../utils/noteGenerationUtils";
@@ -13,6 +12,7 @@ import { getNotePreference } from "../utils/UserPreferencesToNotePreferenceUtils
 import useTimeTracker from "../hooks/useTimeTracker";
 import { formatSecondsToMinuteAndMaybeHour } from "../utils/timeFormatUtils";
 import { Link } from "react-router";
+import usePiano from "../hooks/usePiano";
 
 const SERIES_LENGTH = 20;
 
@@ -32,6 +32,8 @@ function NoteToPitchTestSection() {
 
   const { startClock, restartClock, getCurrentTimeInSeconds } = useTimeTracker();
   const [completionTimeInSeconds, setCompletionTimeInSeconds] = useState<number | null>(null);
+
+  const [isAudioLoading, playPianoNote] = usePiano();
 
   useEffect(() => {
     startClock();
@@ -56,7 +58,7 @@ function NoteToPitchTestSection() {
   }
 
   const onPlayClick = (note: NoteDefinition) => {
-    playNote(note, '1')
+    playPianoNote(note);
   }
 
   const handleRestart = () => {
@@ -103,7 +105,7 @@ function NoteToPitchTestSection() {
       <SingleNoteSheet xmlDoc={xmlDoc} />
       <SingleNotePickerForm correctNote={note} isAnswerCorrect={isCorrect} onSubmit={handleSubmit} />
       <Box marginTop={1}>
-        <Button color='success' onClick={() => onPlayClick(note)}><PlayArrow /></Button>
+        <Button color='success' disabled={isAudioLoading} onClick={() => onPlayClick(note)}><PlayArrow /></Button>
       </Box>
       <Stack width={"50%"} paddingLeft={5} marginTop={1} direction="row" spacing={2}>
         <Box flexGrow={1}>{index} / {SERIES_LENGTH}</Box>

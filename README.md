@@ -21,12 +21,13 @@ Each pitch can either be a bass / treble clef, and up to 15va / 15vb.
 1. Key Signature recognition
 1. Interval recognition
 1. Play Intervals and sing-along
-1. Meter / beat play sound
+1. Meter / beat play sound 
+  1. Piano sound coming from [an open source tone.js piano project](https://github.com/Makefully-Studios/tonejs-instruments/blob/main/samples/piano/mp3/README.md). Since I was unable to find the package on npm, I pulled down the piano mp3 section.
 
 # Contributions
-Feature Request channels:
+## Feature Request channels:
 1. [JIRA Kanban](https://wangtjwork.atlassian.net/jira/software/projects/KAN/boards/1)
 2. [GitHub Issues](https://github.com/wangtjwork/3_mins_musical_societies/issues), with enhancement label / documentation label
 
-Bug Reports:
+## Bug Reports:
 1. [GitHub Issues](https://github.com/wangtjwork/3_mins_musical_societies/issues), with bug label. Please include information about the platform (Desktop / Android / iOS) and browser type (Chrome / WeChat / FireFox etc.).
