@@ -37,7 +37,7 @@ function App() {
               } />
             </Routes>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              五线谱读音名练习
+              乐理练习
             </Typography>
             <Button color='inherit' onClick={() => location.reload()}><Refresh /></Button>
           </Toolbar>

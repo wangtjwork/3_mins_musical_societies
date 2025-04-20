@@ -1,20 +1,37 @@
 
-import { Paper, Typography } from "@mui/material";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { Link } from "react-router";
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
 
 import * as Abouts from '../constants/Abouts';
 
 export default function HomeSection() {
   return (
-    <Stack sx={{ height: '100%' }} paddingTop={5} justifyContent='space-between'>
-      <Link to="/note-to-pitch">
-        <Button
-          sx={{ width: 'fit-content' }}
-          variant='contained'
-        >开始测试</Button>
-      </Link>
+    <Stack sx={{ height: '100%' }} paddingTop={2} justifyContent='space-between'>
+      <Grid container spacing={2} paddingLeft={1} paddingRight={1}>
+        <Grid size={6} height={80} >
+          <Card variant='outlined'>
+            <CardActionArea>
+              <Link to="/note-to-pitch">
+                <CardContent>
+                  <Typography variant="h6" component="div">
+                    单音符识别练习
+                  </Typography>
+                  <br />
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    对于五线谱上的单音符，在最短时间内识别出对应的音名
+                  </Typography>
+                </CardContent>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
+      </Grid>
 
       <Paper elevation={6} sx={{ marginBottom: 5 }}>
         <Typography variant="body2">
