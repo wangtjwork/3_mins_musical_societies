@@ -2,56 +2,55 @@ import { createContext, useMemo, useState } from "react";
 import { PitchFormatType, SheetFeatureType, UserPreferences } from "../types/UserPreferencesType";
 import { loadPreferencesFromLocalStorage, writePreferencesIntoLocalStorage } from "../utils/localStorageUtils";
 import { defaultUserPreferences } from "../constants/defaultUserPreferences";
-import { SheetFeatures } from "../constants/sheetFeatures";
 
 type UserPreferencesSetters = {
-    setNoteToPitchTestFormat: (format: PitchFormatType) => void,
-    setSheetFeature: (feature: SheetFeatureType) => void,
+  setNoteToPitchTestFormat: (format: PitchFormatType) => void,
+  setSheetFeature: (feature: SheetFeatureType) => void,
 }
 
 export type UserPreferencesContextType = UserPreferences & UserPreferencesSetters;
 
 export const UserPreferencesContext = createContext({
-    noteToPitchTestFormat: 'Scientific',
-    sheetFeature: 'TrebleOnly',
-    setNoteToPitchTestFormat: () => { },
-    setSheetFeature: () => { }
+  noteToPitchTestFormat: 'Scientific',
+  sheetFeature: 'TrebleOnly',
+  setNoteToPitchTestFormat: () => { },
+  setSheetFeature: () => { }
 } as UserPreferencesContextType);
 
 type Props = {
-    children?: React.ReactNode
+  children?: React.ReactNode
 };
 
 function UserPreferencesContextProvider({ children }: Props) {
-    const [userPreferences, setUserPreferences] = useState<UserPreferences>(
-        { ...defaultUserPreferences, ...loadPreferencesFromLocalStorage(defaultUserPreferences) });
+  const [userPreferences, setUserPreferences] = useState<UserPreferences>(
+    { ...defaultUserPreferences, ...loadPreferencesFromLocalStorage(defaultUserPreferences) });
 
-    const userPreferencesValue = useMemo<UserPreferencesContextType>(() => ({
+  const userPreferencesValue = useMemo<UserPreferencesContextType>(() => ({
+    ...userPreferences,
+    setNoteToPitchTestFormat: (format: PitchFormatType) => {
+      const nextUserPreferences = {
         ...userPreferences,
-        setNoteToPitchTestFormat: (format: PitchFormatType) => {
-            const nextUserPreferences = {
-                ...userPreferences,
-                noteToPitchTestFormat: format,
-            };
-            setUserPreferences(nextUserPreferences);
-            writePreferencesIntoLocalStorage(nextUserPreferences);
-        },
-        setSheetFeature: (feature) => {
-            const nextUserPreferences = {
-                ...userPreferences,
-                sheetFeature: feature
-            };
-            console.log('called', feature);
-            setUserPreferences(nextUserPreferences);
-            writePreferencesIntoLocalStorage(nextUserPreferences);
-        }
-    }), [userPreferences, setUserPreferences]);
+        noteToPitchTestFormat: format,
+      };
+      setUserPreferences(nextUserPreferences);
+      writePreferencesIntoLocalStorage(nextUserPreferences);
+    },
+    setSheetFeature: (feature) => {
+      const nextUserPreferences = {
+        ...userPreferences,
+        sheetFeature: feature
+      };
+      console.log('called', feature);
+      setUserPreferences(nextUserPreferences);
+      writePreferencesIntoLocalStorage(nextUserPreferences);
+    }
+  }), [userPreferences, setUserPreferences]);
 
-    return (
-        <UserPreferencesContext.Provider value={userPreferencesValue}>
-            {children}
-        </UserPreferencesContext.Provider>
-    );
+  return (
+    <UserPreferencesContext.Provider value={userPreferencesValue}>
+      {children}
+    </UserPreferencesContext.Provider>
+  );
 }
 
 export default UserPreferencesContextProvider;

@@ -37,6 +37,8 @@ function NoteToPitchTestSection() {
 
   useEffect(() => {
     startClock();
+    // use similar to componentDidMount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onNextClick = () => {

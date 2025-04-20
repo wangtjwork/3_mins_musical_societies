@@ -2,12 +2,12 @@ import { Pitches, ScientificNote } from "../types/NoteType";
 
 const ZEROTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}0` as ScientificNote);
 const FIRST_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}1` as ScientificNote);
-const SECOND_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}2` as ScientificNote);;
-const THIRD_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}3` as ScientificNote);;
-const FOURTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}4` as ScientificNote);;
-const FIFTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}5` as ScientificNote);;
-const SIXTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}6` as ScientificNote);;
-const SEVENTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}7` as ScientificNote);;
+const SECOND_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}2` as ScientificNote);
+const THIRD_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}3` as ScientificNote);
+const FOURTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}4` as ScientificNote);
+const FIFTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}5` as ScientificNote);
+const SIXTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}6` as ScientificNote);
+const SEVENTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}7` as ScientificNote);
 
 export const TREBLE_CLEF_NOTES_SCIENTIFIC: ScientificNote[] =
     ['F3', 'G3', 'A3', 'B3', 'C6', 'D6', 'E6', ...FOURTH_OCTAVE, ...FIFTH_OCTAVE];

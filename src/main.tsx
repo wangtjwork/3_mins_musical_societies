@@ -15,9 +15,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 
 if ("serviceWorker" in navigator) {
   registerSW({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onRegistered(r: any) {
-      r && setInterval(() => {
+    onRegistered(r: ServiceWorkerRegistration | undefined) {
+      if (r === undefined) {
+        return;
+      }
+      setInterval(() => {
         console.log('Updating worker...');
         r.update();
       }, 1000 * 60 * 10)
