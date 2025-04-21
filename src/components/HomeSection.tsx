@@ -31,6 +31,25 @@ export default function HomeSection() {
             </CardActionArea>
           </Card>
         </Grid>
+        <Grid size={6} height={80} >
+          <Card variant='outlined'>
+            <CardActionArea>
+              <Link to="/key-signature">
+                <CardContent>
+                  <Typography variant="h6" component="div">
+                    调号识别练习
+                  </Typography>
+                  <br />
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    对于五线谱调号，在最短时间内识别出对应的大调
+                    <br />
+                    小调因为一一对应大调下方大三度故不单独识别
+                  </Typography>
+                </CardContent>
+              </Link>
+            </CardActionArea>
+          </Card>
+        </Grid>
       </Grid>
 
       <Paper elevation={6} sx={{ marginBottom: 5 }}>

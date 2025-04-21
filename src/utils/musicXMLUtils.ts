@@ -1,10 +1,12 @@
+import { Fifth } from "../constants/musicKeyConfig";
 import { Clef, Octave, OctaveShiftType, Pitch } from "../types/NoteType";
-import { clefToMusicXmlNodes, octaveShiftToMusicXmlNodes } from "./musicXMLNodeUtils";
+import { clefToMusicXmlNodes, fifthToMusicXMLNodes, octaveShiftToMusicXmlNodes } from "./musicXMLNodeUtils";
 
 const SINGLE_NOTE_PITCH_ID = "singleNotePitchID";
 const SINGLE_NOTE_OCTAVE_ID = "singleNoteOctaveID";
 const SINGLE_NOTE_CLEF_ID = 'singleNoteClefID';
 const OCTAVE_SHIFT_WRAPPER_ID = 'octaveShiftWrapperID';
+const KEY_ID = "keyID";
 
 const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE score-partwise PUBLIC
@@ -27,7 +29,7 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
       </direction>
       <attributes>
         <divisions>1</divisions>
-        <key>
+        <key id="${KEY_ID}">
           <fifths>0</fifths>
         </key>
         <time>
@@ -88,5 +90,17 @@ export function generateSingleNoteXml(xmlDoc: XMLDocument, note: SheetNoteDefini
   }
 
   // need to shallow copy to confirm the node changed for react
+  return deepCopyXmlDocument(xmlDoc);
+}
+
+export function generateKeyXml(xmlDoc: XMLDocument, fifth: Fifth) {
+  const keyNode = xmlDoc.getElementById(KEY_ID);
+  if (keyNode == null) {
+    console.warn('keyNode does not exist for this XML config');
+    return xmlDoc;
+  }
+
+  keyNode.innerHTML = fifthToMusicXMLNodes(fifth);
+
   return deepCopyXmlDocument(xmlDoc);
 }

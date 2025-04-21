@@ -10,19 +10,19 @@ const SIXTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}6` as ScientificNot
 const SEVENTH_OCTAVE: ScientificNote[] = Pitches.map(p => `${p}7` as ScientificNote);
 
 export const TREBLE_CLEF_NOTES_SCIENTIFIC: ScientificNote[] =
-    ['F3', 'G3', 'A3', 'B3', 'C6', 'D6', 'E6', ...FOURTH_OCTAVE, ...FIFTH_OCTAVE];
+  ['F3', 'G3', 'A3', 'B3', 'C6', 'D6', 'E6', ...FOURTH_OCTAVE, ...FIFTH_OCTAVE];
 export const TREBLE_CLEF_MIN_NOTE_REGULAR = 'F3';
 export const TREBLE_CLEF_MAX_NOTE_REGULAR = 'E6';
 
 export const BASS_CLEF_NOTES_SCIENTIFIC: ScientificNote[] =
-    ['A1', 'B1', 'C4', 'D4', 'E4', 'F4', 'G4', ...SECOND_OCTAVE, ...THIRD_OCTAVE];
+  ['A1', 'B1', 'C4', 'D4', 'E4', 'F4', 'G4', ...SECOND_OCTAVE, ...THIRD_OCTAVE];
 export const BASS_CLEF_MIN_NOTE_REGULAR = 'A1';
 export const BASS_CLEF_MAX_NOTE_REGULAR = 'G4';
 
 export const TREBLE_CLEF_NOTES_SCIENTIFIC_EXTENDED: ScientificNote[] =
-    ['F1', 'G1', 'A1', 'B1', 'C8', 'D8', 'E8', ...SECOND_OCTAVE, ...THIRD_OCTAVE,
-        ...FOURTH_OCTAVE, ...FIFTH_OCTAVE, ...SIXTH_OCTAVE, ...SEVENTH_OCTAVE];
+  ['F1', 'G1', 'A1', 'B1', 'C8', 'D8', 'E8', ...SECOND_OCTAVE, ...THIRD_OCTAVE,
+    ...FOURTH_OCTAVE, ...FIFTH_OCTAVE, ...SIXTH_OCTAVE, ...SEVENTH_OCTAVE];
 
 export const BASS_CLEF_NOTES_SCIENTIFIC_EXTENDED: ScientificNote[] =
-    ['C6', 'D6', 'E6', 'F6', 'G6', ...ZEROTH_OCTAVE, ...FIRST_OCTAVE, ...SECOND_OCTAVE,
-        ...THIRD_OCTAVE, ...FOURTH_OCTAVE, ...FIFTH_OCTAVE];
+  ['C6', 'D6', 'E6', 'F6', 'G6', ...ZEROTH_OCTAVE, ...FIRST_OCTAVE, ...SECOND_OCTAVE,
+    ...THIRD_OCTAVE, ...FOURTH_OCTAVE, ...FIFTH_OCTAVE];

@@ -13,6 +13,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Link, Route, Routes } from 'react-router';
 import HomeSection from './components/HomeSection';
 import BottomNavigationMenu from './components/BottomNavigationMenu';
+import KeySignatureTestSection from './components/KeySignatureTestSection';
 
 function App() {
   return (
@@ -22,18 +23,12 @@ function App() {
         <AppBar position='static'>
           <Toolbar>
             <Routes>
+              <Route index element={null} />
               <Route path="note-to-pitch" element={
-                <Link to="/" style={{ color: 'inherit' }}>
-                  <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    sx={{ mr: 2 }}
-                  >
-                    <ArrowBack />
-                  </IconButton>
-                </Link>
+                <BackButton />
+              } />
+              <Route path="key-signature" element={
+                <BackButton />
               } />
             </Routes>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -50,6 +45,9 @@ function App() {
             <Route path="note-to-pitch" element={
               <NoteToPitchTestSection />
             } />
+            <Route path="key-signature" element={
+              <KeySignatureTestSection />
+            } />
             <Route path="settings" element={
               <UserPreferencesSection />
             } />
@@ -61,6 +59,22 @@ function App() {
       <SpeedInsights />
     </UserPreferencesContextProvider>
   )
+}
+
+function BackButton() {
+  return (
+    <Link to="/" style={{ color: 'inherit' }}>
+      <IconButton
+        size="large"
+        edge="start"
+        color="inherit"
+        aria-label="menu"
+        sx={{ mr: 2 }}
+      >
+        <ArrowBack />
+      </IconButton>
+    </Link>
+  );
 }
 
 export default App
