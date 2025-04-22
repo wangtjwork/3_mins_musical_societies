@@ -17,6 +17,7 @@ export type OctaveShiftUpType = '8' | '15';
 export type OctaveShiftDownType = `-${OctaveShiftUpType}`;
 export type OctaveShiftType = OctaveShiftUpType | OctaveShiftDownType;
 
-export type Accidental = 'flat' | 'sharp' | 'double flat' | 'double sharp' | 'natural';
+export const Accidentals = ['flat', 'sharp', 'double flat', 'double sharp', 'natural'] as const;
+export type Accidental = typeof Accidentals[number];
 export type Key = `${Pitch}` | `${Pitch} ${Accidental}`;
 
