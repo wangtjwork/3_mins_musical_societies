@@ -1,4 +1,12 @@
-export const FIFTHS_TO_MAJOR_KEYS = {
+import { Key } from "../types/NoteType";
+
+
+export const ALL_FIFTHS = ['0', '1', '2', '3', '4', '5', '6', '7', '-1', '-2', '-3', '-4', '-5', '-6', '-7'] as const;
+export type Fifth = typeof ALL_FIFTHS[number];
+
+export const FIFTHS_TO_MAJOR_KEYS: {
+  [K in Fifth]: Key[];
+} = {
   '0': ['C'],
   '1': ['G'],
   '2': ['D'],
@@ -16,5 +24,3 @@ export const FIFTHS_TO_MAJOR_KEYS = {
   '-7': ['B', 'C flat']
 }
 
-export const ALL_FIFTHS = Object.keys(FIFTHS_TO_MAJOR_KEYS);
-export type Fifth = typeof ALL_FIFTHS[number];

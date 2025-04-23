@@ -19,8 +19,7 @@ function KeySignatureTestSection() {
     return generateKeyXml(singleNoteXmlDoc, fifth);
   }, [fifth]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [correctNotesCount, setCorrectNotesCount] = useState(0);
   const { index, hasNext, goToNext, resetIndex } = useQuestionSeries(SERIES_LENGTH);
 
@@ -46,8 +45,7 @@ function KeySignatureTestSection() {
     setFifth(generateRandomFifth());
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const _handleSubmit = (isCorrect: boolean) => {
+  const handleSubmit = (isCorrect: boolean) => {
     setIsCorrect(isCorrect);
     if (isCorrect) {
       setCorrectNotesCount(i => i + 1);
@@ -96,7 +94,7 @@ function KeySignatureTestSection() {
   return (
     <Stack alignItems='center'>
       <SingleNoteSheet xmlDoc={xmlDoc} />
-      <KeyPickerForm />
+      <KeyPickerForm key={index} onSubmit={handleSubmit} isCorrect={isCorrect} answer={fifth} />
       <Stack width={"50%"} paddingLeft={5} marginTop={1} direction="row" spacing={2}>
         <Box flexGrow={1}>{index} / {SERIES_LENGTH}</Box>
         <NavigateNext color={"inherit"} onClick={onNextClick} />

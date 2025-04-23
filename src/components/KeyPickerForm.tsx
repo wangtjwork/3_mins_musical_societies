@@ -1,6 +1,8 @@
-import { FormControl, FormLabel, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { Accidental, Pitch, Pitches } from "../types/NoteType";
-import { useState } from "react";
+import { Box, Button, FormControl, FormLabel, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Accidental, Key, Pitch, Pitches } from "../types/NoteType";
+import { useMemo, useState } from "react";
+import { Fifth, FIFTHS_TO_MAJOR_KEYS } from "../constants/musicKeyConfig";
+import { convertFifthToChineseKeyNames } from "../utils/keyUtils";
 
 const PITCHES = Pitches;
 const ACCIDENTALS = {
@@ -8,9 +10,38 @@ const ACCIDENTALS = {
   'sharp': '\u266f'
 }; // we only care about flat or sharp for basic use cases
 
-export default function KeyPickerForm() {
+type Props = {
+  onSubmit: (isCorrect: boolean) => void,
+  answer: Fifth,
+  isCorrect: boolean | null,
+}
+
+export default function KeyPickerForm({ onSubmit, answer, isCorrect }: Props) {
   const [selectedPitch, setSelectedPitch] = useState<Pitch | ''>('');
   const [selectedAccidental, setSelectedAccidental] = useState<Accidental | ''>('');
+
+  const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
+  const [showAnswer, setShowAnswer] = useState<boolean>(false);
+
+  const checkCorrectness = () => {
+    setHasSubmitted(true);
+    if (selectedPitch === '') {
+      onSubmit(false);
+      return;
+    }
+    const chosenKey: Key = selectedAccidental === '' ? selectedPitch : `${selectedPitch} ${selectedAccidental}`;
+
+    const correctKeys = FIFTHS_TO_MAJOR_KEYS[answer];
+    if (correctKeys.includes(chosenKey)) {
+      onSubmit(true);
+    } else {
+      onSubmit(false);
+    }
+  }
+
+  const userFriendlyAnswer = useMemo(() => {
+    return convertFifthToChineseKeyNames(answer);
+  }, [answer])
 
   return (
     <>
@@ -54,6 +85,21 @@ export default function KeyPickerForm() {
           ))}
         </ToggleButtonGroup>
       </FormControl>
+
+      <Box marginTop={1}>
+        {hasSubmitted == false ? <Button variant={'outlined'} onClick={checkCorrectness} sx={{ width: 'fit-content' }}>检查</Button> : null}
+        {isCorrect != null &&
+          (
+            isCorrect
+              ? <Typography variant="body2" marginTop={1} gutterBottom color='success.main'>正确</Typography>
+              : <Typography variant="body2" marginTop={1} gutterBottom color='error.main'>错误</Typography>
+          )
+        }
+        {isCorrect === false && (
+          showAnswer ? <Typography variant="body2" marginTop={1} gutterBottom color='success.main'>{userFriendlyAnswer}</Typography>
+            : <Button sx={{ width: 'fit-content' }} variant='text' onClick={() => setShowAnswer(true)}>显示答案</Button>
+        )}
+      </Box>
     </>
   )
 }
